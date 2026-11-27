@@ -1,0 +1,316 @@
+[
+  {
+    "nome": "valido - exemplo da saida do mercado",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 1250.8,
+      "data_lancamento": "2025-05-05",
+      "descricao": "mercado do mes"
+    },
+    "esperado": {
+      "status": 201,
+      "resposta": {
+        "lancamento_id": "<numero gerado pelo banco>"
+      }
+    }
+  },
+  {
+    "nome": "valido - entrada com valor e ids em texto",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": "1",
+      "categoria_id": "2",
+      "tipo": "entrada",
+      "valor": "3500.00",
+      "data_lancamento": "2025-05-01",
+      "descricao": "salario"
+    },
+    "esperado": {
+      "status": 201,
+      "resposta": {
+        "lancamento_id": "<numero gerado pelo banco>"
+      }
+    }
+  },
+  {
+    "nome": "valido - sem descricao",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 45.9,
+      "data_lancamento": "2025-05-10"
+    },
+    "esperado": {
+      "status": 201,
+      "resposta": {
+        "lancamento_id": "<numero gerado pelo banco>"
+      }
+    }
+  },
+  {
+    "nome": "valor zero",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 0,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "valor_invalido"
+      }
+    }
+  },
+  {
+    "nome": "valor negativo",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": -10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "valor_invalido"
+      }
+    }
+  },
+  {
+    "nome": "valor com virgula",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": "1250,80",
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "valor_invalido"
+      }
+    }
+  },
+  {
+    "nome": "sem valor",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "valor_invalido"
+      }
+    }
+  },
+  {
+    "nome": "user_id ausente",
+    "corpo": {
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "user_id_invalido"
+      }
+    }
+  },
+  {
+    "nome": "user_id numerico (nao e uuid)",
+    "corpo": {
+      "user_id": 1,
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "user_id_invalido"
+      }
+    }
+  },
+  {
+    "nome": "conta_id decimal",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1.5,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "conta_id_invalido"
+      }
+    }
+  },
+  {
+    "nome": "categoria_id zero",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 0,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "categoria_id_invalido"
+      }
+    }
+  },
+  {
+    "nome": "tipo desconhecido",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "gasto",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "tipo_invalido"
+      }
+    }
+  },
+  {
+    "nome": "tipo com maiuscula",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "Saida",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "tipo_invalido"
+      }
+    }
+  },
+  {
+    "nome": "data que nao existe",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "2025-02-30",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "data_lancamento_invalida"
+      }
+    }
+  },
+  {
+    "nome": "data no formato brasileiro",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "05/05/2025",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "data_lancamento_invalida"
+      }
+    }
+  },
+  {
+    "nome": "descricao numerica",
+    "corpo": {
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": 123
+    },
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "descricao_invalida"
+      }
+    }
+  },
+  {
+    "nome": "lancamento_id enviado pelo cliente e ignorado",
+    "corpo": {
+      "lancamento_id": 999,
+      "user_id": "2230afaf-5456-4046-b1b5-823a5ae62428",
+      "conta_id": 1,
+      "categoria_id": 1,
+      "tipo": "saida",
+      "valor": 10,
+      "data_lancamento": "2025-05-05",
+      "descricao": "teste"
+    },
+    "esperado": {
+      "status": 201,
+      "resposta": {
+        "lancamento_id": "<numero gerado pelo banco, nao 999>"
+      }
+    }
+  },
+  {
+    "nome": "JSON malformado",
+    "corpoBruto": "{\"valor\": ",
+    "esperado": {
+      "status": 400,
+      "resposta": {
+        "erro": "json_invalido"
+      }
+    }
+  }
+]
